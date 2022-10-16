@@ -3,3 +3,5 @@ services:
   php:
     build: .
     tty: true # for detach in bash terminal
+    volumes:
+      - .:/my_project
