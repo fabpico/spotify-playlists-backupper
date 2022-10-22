@@ -19,10 +19,26 @@ abstract class HttpTestCase extends KernelTestCase
 
     protected function request(string $method, string $url): ResponseInterface
     {
-        return static::$httpClient->request($method, $url);
+        $clientId = $_ENV['CLIENT_ID'];
+        $clientSecret = $_ENV['CLIENT_SECRET'];
+        $tokenResponse = static::$httpClient->request('POST',
+            'https://accounts.spotify.com/api/token?grant_type=client_credentials',
+            [
+                'headers' => [
+                    'Authorization' => 'Basic ' . base64_encode("$clientId:$clientSecret")
+                ]
+            ]
+        );
+        $tokenContent = json_decode($tokenResponse->getContent(false), true);
+        $accessToken = $tokenContent['access_token'];
+        return static::$httpClient->request($method, $url, [
+            'headers' => [
+                'Authorization' => "Bearer $accessToken"
+            ]
+        ]);
     }
 
-    protected function assertOkResponse(Response $response): void
+    protected function assertOkResponse(ResponseInterface $response): void
     {
         self::assertEquals(Response::HTTP_OK, $response->getStatusCode());
     }
