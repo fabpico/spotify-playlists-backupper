@@ -1,0 +1,15 @@
+<script>
+    setTimeout(function () {
+        var state = 'foo'; // todo, required?
+        var queryString = new URLSearchParams({
+            response_type: 'code',
+            client_id: '{{ clientId }}',
+            scope: 'user-read-private playlist-read-collaborative',
+            redirect_uri: '{{ redirectUrl }}',
+            state: state,
+        }).toString();
+        window.location.href = 'https://accounts.spotify.com/authorize?' + queryString
+    }, 1000)
+</script>
+
+<p>Redirecting to spotify authorization..</p>

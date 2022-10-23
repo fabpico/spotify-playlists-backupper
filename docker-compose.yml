@@ -4,4 +4,9 @@ services:
     build: .
     tty: true # for detach in bash terminal
     volumes:
-      - .:/my_project
+      - .:/var/www/html
+    ports:
+      - "8086:80"
+    environment:
+      CLIENT_ID: ${CLIENT_ID}
+      REDIRECT_URL: ${REDIRECT_URL}

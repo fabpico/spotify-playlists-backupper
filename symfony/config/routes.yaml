@@ -1,3 +1,7 @@
 controllers:
     resource: ../src/Controller/
     type: attribute
+
+authorize:
+    path: /authorize
+    controller: App\Controller\AuthorizationController::authorize

@@ -1,4 +1,4 @@
-FROM php:8.1
+FROM php:8.1-apache
 
 RUN curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.deb.sh' | bash
 RUN apt install --yes symfony-cli
