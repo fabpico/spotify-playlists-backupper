@@ -4,6 +4,7 @@
     "start": "docker-compose up -d",
     "stop": "docker-compose down",
     "restart": "npm run stop && npm run start",
-    "bash": "docker-compose exec php bash"
+    "bash": "docker-compose exec php bash",
+    "backup-playlists": "docker-compose exec php bash -c \"cd symfony && php bin/console app:backup-playlists\""
   }
 }

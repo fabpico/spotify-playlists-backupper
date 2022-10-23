@@ -38,6 +38,10 @@ final class SpotifyAdapter
         $response = $this->httpClient->request($method, $url, [
             'headers' => ['Authorization' => "Bearer $accessToken"]
         ]);
-        return json_decode($response->getContent(false), true);
+        $data = json_decode($response->getContent(false), true);
+        if (array_key_exists('error', $data)) {
+            throw new \Exception(json_encode($data['error']));
+        }
+        return $data;
     }
 }
