@@ -5,7 +5,6 @@
             client_id: '{{ clientId }}',
             scope: 'playlist-read-private',
             redirect_uri: '{{ redirectUrl }}',
-            // state: state,
         };
         var queryString = new URLSearchParams(params).toString();
         window.location.href = 'https://accounts.spotify.com/authorize?' + queryString

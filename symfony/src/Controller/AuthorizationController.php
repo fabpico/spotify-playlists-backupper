@@ -2,23 +2,24 @@
 
 namespace App\Controller;
 
-use App\Common\Cache;
+use App\Common\Authorization;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthorizationController extends AbstractController
 {
-    private Cache $cache;
+    private Authorization $authorization;
 
-    public function __construct(Cache $cache)
+    public function __construct(Authorization $authorization)
     {
-        $this->cache = $cache;
+        $this->authorization = $authorization;
     }
 
     public function authorize(): Response
     {
         if (array_key_exists('code', $_GET)) {
-            $this->cache->save('code', $_GET['code']);
+            $authorizationCode = $_GET['code'];
+            $this->authorization->cacheAccessToken($authorizationCode);
             return $this->render('authorized.html.twig', [
                 'redirectUrl' => $_ENV['SPOTIFY_REDIRECT_URL'],
             ]);

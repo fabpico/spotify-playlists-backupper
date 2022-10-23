@@ -29,21 +29,7 @@ abstract class HttpTestCase extends KernelTestCase
 
     protected function request(string $method, string $url): ResponseInterface
     {
-        $clientId = $_ENV['SPOTIFY_CLIENT_ID'];
-        $clientSecret = $_ENV['SPOTIFY_CLIENT_SECRET'];
-        $redirectUrl = $_ENV['SPOTIFY_REDIRECT_URL']; // required for endpoint, not for test
-        $code = static::$cache->get('code');
-
-        $tokenResponse = static::$httpClient->request('POST',
-            "https://accounts.spotify.com/api/token?grant_type=authorization_code&code=$code&redirect_uri=$redirectUrl",
-            [
-                'headers' => [
-                    'Authorization' => 'Basic ' . base64_encode("$clientId:$clientSecret")
-                ]
-            ]
-        );
-        $tokenContent = json_decode($tokenResponse->getContent(false), true);
-        $accessToken = $tokenContent['access_token'];
+        $accessToken = static::$cache->get('accessToken');
         return static::$httpClient->request($method, $url, [
             'headers' => [
                 'Authorization' => "Bearer $accessToken"
