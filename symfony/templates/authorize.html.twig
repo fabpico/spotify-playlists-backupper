@@ -1,13 +1,13 @@
 <script>
     setTimeout(function () {
-        var state = 'foo'; // todo, required?
-        var queryString = new URLSearchParams({
+        var params = {
             response_type: 'code',
             client_id: '{{ clientId }}',
-            scope: 'user-read-private playlist-read-collaborative',
+            scope: 'playlist-read-private',
             redirect_uri: '{{ redirectUrl }}',
-            state: state,
-        }).toString();
+            // state: state,
+        };
+        var queryString = new URLSearchParams(params).toString();
         window.location.href = 'https://accounts.spotify.com/authorize?' + queryString
     }, 1000)
 </script>
