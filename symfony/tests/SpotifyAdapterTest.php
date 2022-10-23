@@ -2,18 +2,22 @@
 
 namespace App\Tests;
 
+use App\Adapters\SpotifyAdapter;
 use App\Tests\Api\ApiTestCase;
 use PHPUnit\Framework\Assert;
 
-final class SpotifyAdapterTest extends HttpTestCase
+final class SpotifyAdapterTest extends IntegrationTestCase
 {
+    private SpotifyAdapter $spotifyAdapter;
+
+    public function setUp(): void
+    {
+        $this->spotifyAdapter = static::$kernel->getContainer()->get(SpotifyAdapter::class);
+    }
+
     public function testGetPlaylists(): void
     {
-        $userId = $_ENV['SPOTIFY_USERNAME'];
-        $response = $this->request('GET', "https://api.spotify.com/v1/users/$userId/playlists");
-
-        $this->assertOkResponse($response);
-        $data = json_decode($response->getContent(false), true);
-        Assert::assertNotEmpty($data['items'], 'No playlists received.');
+        $playlists = $this->spotifyAdapter->getPlaylists();
+        Assert::assertNotEmpty($playlists);
     }
 }
