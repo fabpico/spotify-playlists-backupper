@@ -26,10 +26,19 @@ final class SpotifyAdapter
 
     public function getPlaylistTracks(string $id): array
     {
-        $data = $this->requestAuthenticated('GET',
-            "https://api.spotify.com/v1/users/{$_ENV['SPOTIFY_USERNAME']}/playlists/$id/tracks"
-        );
-        return $data['items'];
+        $url = "https://api.spotify.com/v1/users/{$_ENV['SPOTIFY_USERNAME']}/playlists/$id/tracks";
+        $data = $this->requestAuthenticated('GET', $url);
+        $tracks = $data['items'];
+        if ($data['total'] > $data['limit']) {
+            $neededRequestsCount = (int)($data['total'] / $data['limit']);
+            $offset = $data['limit'];
+            for ($requestsCount = 1; $requestsCount <= $neededRequestsCount; $requestsCount++) {
+                $nextData = $this->requestAuthenticated('GET', "$url?offset=$offset");
+                $tracks = array_merge($tracks, $nextData['items']);
+                $offset += $data['limit'];
+            }
+        }
+        return $tracks;
     }
 
     private function requestAuthenticated(string $method, string $url): array

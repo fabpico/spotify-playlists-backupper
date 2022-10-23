@@ -23,7 +23,7 @@ final class SpotifyAdapterTest extends IntegrationTestCase
 
     public function testGetPlaylistTracks(): void
     {
-        $playlistId = '3ahASI44sL89QWcKvGpbUz';
+        $playlistId = '510gc3bodmwTyBaaKDXuy7';
         $tracks = $this->spotifyAdapter->getPlaylistTracks($playlistId);
         Assert::assertNotEmpty($tracks);
     }
