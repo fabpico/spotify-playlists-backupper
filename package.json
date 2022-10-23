@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "build": "docker-compose build",
+    "start": "docker-compose up -d",
+    "stop": "docker-compose down",
+    "restart": "npm run stop && npm run start",
+    "bash": "docker-compose exec php bash"
+  }
+}
