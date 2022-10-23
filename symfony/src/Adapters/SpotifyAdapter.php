@@ -18,9 +18,18 @@ final class SpotifyAdapter
 
     public function getPlaylists(): array
     {
-        return $this->requestAuthenticated('GET',
+        $data = $this->requestAuthenticated('GET',
             "https://api.spotify.com/v1/users/{$_ENV['SPOTIFY_USERNAME']}/playlists?limit=50"
         );
+        return $data['items'];
+    }
+
+    public function getPlaylistTracks(string $id): array
+    {
+        $data = $this->requestAuthenticated('GET',
+            "https://api.spotify.com/v1/users/{$_ENV['SPOTIFY_USERNAME']}/playlists/$id/tracks"
+        );
+        return $data['items'];
     }
 
     private function requestAuthenticated(string $method, string $url): array
