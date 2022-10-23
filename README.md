@@ -1,4 +1,4 @@
-# Symfony playlist backupper
+# Spotify playlists backupper
 
 This tool will backup your playlists as CSV files.
 
