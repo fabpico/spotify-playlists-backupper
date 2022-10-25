@@ -9,7 +9,7 @@ This tool will backup your playlists as CSV files.
 2. Configure `.env` (see `.env.sample`)
 3. Run the docker container
 4. Bash into the docker container, run `cd symfony` & `composer install`
-5. Open the authorization url http://localhost:8086/symfony/public/index.php/authorize to cache an acces token
+5. Open the authorization url http://localhost:8086/symfony/public/index.php/authorize to cache access token
 
 ## Run backup
 
