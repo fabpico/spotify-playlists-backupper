@@ -13,5 +13,5 @@ This tool will backup your playlists as CSV files.
 
 ## Run backup
 
-Bash into the docker container, run `app:backup-playlists`.  
+Bash into the docker container, run `php symfony/bin/console app:backup-playlists`.  
 Your backup will be located in `./backups`.
