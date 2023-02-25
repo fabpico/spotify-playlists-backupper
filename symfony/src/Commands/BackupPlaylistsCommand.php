@@ -25,10 +25,14 @@ final class BackupPlaylistsCommand extends Command
             mkdir($momentBackupPath, 0777, true);
         }
         $playlists = $this->spotifyAdapter->getPlaylists();
+        $output->writeln("Playlists count: " . count($playlists));
         foreach ($playlists as $playlist) {
             $playlistName = $this->sanitizePlaylistName($playlist['name']);
             $playlistFile = fopen("$momentBackupPath/{$playlistName}.csv", 'w');
-            $trackRows = $this->createTrackRows($playlist['id']);
+            $tracks = $this->spotifyAdapter->getPlaylistTracks($playlist['id']);
+            $output->writeln("Processing playlist '$playlistName' with " . count($tracks) . ' tracks');
+
+            $trackRows = $this->createRows($tracks);
             $firstRow = ['Name', 'Artists'];
             $allRows = array_merge([$firstRow], $trackRows);
             foreach ($allRows as $row) {
@@ -36,12 +40,12 @@ final class BackupPlaylistsCommand extends Command
             }
             fclose($playlistFile);
         }
+        $output->writeln('Done');
         return Command::SUCCESS;
     }
 
-    private function createTrackRows(string $playlistId): array
+    private function createRows(array $tracks): array
     {
-        $tracks = $this->spotifyAdapter->getPlaylistTracks($playlistId);
         return array_map(function (array $track): array {
             $artistNames = array_map(fn(array $artist): string => $artist['name'], $track['track']['artists']);
             return [

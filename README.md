@@ -18,6 +18,6 @@ Backup your Spotify playlists as CSV files.
 ## Use
 
 1. Open PHP terminal: `docker compose up -d`, `docker compose exec php bash`
-2. Execute: `php symfony/bin/console app:backup-playlists`
+2. In `./symfony`, execute: `php bin/console app:backup-playlists`
 
 Your backup will be located in `./backups`.
