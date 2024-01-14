@@ -13,6 +13,7 @@ Backup your Spotify playlists as CSV files.
 1. Add `./app/.env` (see `./app/.env.sample`)
 2. Bash into the container: `cd .docker`, `docker compose up -d`, `docker compose exec php-apache bash`
 3. Install packages: `composer install`
+4. Warmup cache: `php bin/console cache:warmup`
 
 ## Use
 
